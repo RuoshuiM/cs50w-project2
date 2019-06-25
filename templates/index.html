@@ -1,0 +1,22 @@
+<!DOCTYPE html>
+<html lang='en'>
+    <head>
+        <title>Flack</title>
+        <meta charset="utf-8">
+        <link rel="shortcut icon" href="{{url_for('static', filename='favicon.png')}}" />
+        <meta name="viewport" content="width=device-width, initial-scale=1" />
+        <meta name="theme-color" content="#ff9800" />
+        <!--
+        manifest.json provides metadata used when your web app is installed on a
+        user's mobile device or desktop. See https://developers.google.com/web/fundamentals/web-app-manifest/
+        -->
+        <link rel="manifest" href="%PUBLIC_URL%/manifest.json" />
+    </head>
+    <body>
+        <noscript>You need to enable JavaScript to run this app.</noscript>
+
+        <div id="app"></div>
+        <script src="{{url_for('static', filename='dist/bundle.js')}}"></script>
+        <script src="/socket.io/socket.io.js"></script>
+    </body>
+</html>
