@@ -2,7 +2,7 @@ const webpack = require('webpack');
 const path = require('path');
 
 const config = {
-  entry: './src/index.js',
+  entry: ['./src/js/index.js', './src/styles/app.scss'],
   output: {
     path: path.resolve(__dirname, 'static/dist'),
     filename: 'bundle.js'
@@ -10,33 +10,28 @@ const config = {
   module: {
     rules: [
       {
-        test: /\.(js|jsx)$/,
-        use: 'babel-loader',
-        exclude: /node_modules/
-      },
-      {
-        test: /\.css$/,
-        use: [
-          'style-loader',
-          'css-loader'
-        ],
-        exclude: /\.module\.css$/
-      },
-      {
         test: /\.scss$/,
         use: [
-          'style-loader',
-          'css-loader',
-          'sass-loader'
+          {
+            loader: 'file-loader',
+            options: {
+              name: 'bundle.css',
+            },
+          },
+          { loader: 'extract-loader' },
+          { loader: 'css-loader' },
+          {
+            loader: 'sass-loader',
+            options: {
+              includePaths: ['./node_modules']
+            }
+          }
         ]
       },
       {
-        test: /\.css$/,
-        use: [
-          'style-loader',
-          'css-loader?modules&importLoaders=1&localIdentName=[name]__[local]___[hash:base64:5]'
-        ],
-        include: /\.module\.css$/
+        test: /\.(js|jsx)$/,
+        use: 'babel-loader',
+        exclude: /node_modules/
       }
     ]
   },
