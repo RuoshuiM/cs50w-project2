@@ -35,12 +35,7 @@ First install dependencies:
 
 ```sh
 npm install
-```
-
-To run in hot module reloading mode:
-
-```sh
-npm start
+python install -r requirements.txt
 ```
 
 To create a production build:
@@ -56,8 +51,10 @@ npm run build-dev
 ```
 
 ## Running
-
-Open the file `dist/index.html` in your browser
+```
+python application.py
+```
+Visit the hostname given by flask
 
 ## Credits
 

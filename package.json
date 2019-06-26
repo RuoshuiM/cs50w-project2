@@ -9,7 +9,7 @@
     "build-dev": "webpack -d --mode development",
     "build-prod": "webpack -p --progress --mode production",
     "start": "webpack-dev-server --hot --mode development",
-    "watch": "webpack --progress -d --config webpack.config.js --watch"
+    "watch": "webpack --progress -d --config webpack.config.js --mode development --watch"
   },
   "keywords": [],
   "author": "",
@@ -35,6 +35,7 @@
     "react-dom": "^16.8.6",
     "react-hot-loader": "^4.11.1",
     "react-router-dom": "^5.0.1",
-    "rmwc": "^5.5.2"
+    "rmwc": "^5.5.2",
+    "socket.io-client": "^2.2.0"
   }
 }
