@@ -5,7 +5,7 @@ import "../styles/app.scss";
 import { Button } from '@rmwc/button';
 import io from 'socket.io-client';
 
-const socket = io.connect('https://localhost');
+const socket = io();
 
 class App extends React.Component {
   render() {
