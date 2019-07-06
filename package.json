@@ -30,6 +30,12 @@
     "webpack-dev-server": "^3.7.2"
   },
   "dependencies": {
+    "@material/react-button": "^0.14.0",
+    "@material/react-card": "^0.14.1",
+    "@material/react-drawer": "^0.14.0",
+    "@material/react-list": "^0.14.0",
+    "@material/react-material-icon": "^0.14.0",
+    "@material/react-typography": "^0.14.1",
     "material-components-web": "^2.3.1",
     "react": "^16.8.6",
     "react-dom": "^16.8.6",

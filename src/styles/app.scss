@@ -1,7 +1,45 @@
-@import './theme.scss';
-@import "~material-components-web/material-components-web";
+@import './_theme.scss';
+// @import "~material-components-web/material-components-web";
+@import '@material/react-button/index.scss';
+@import '@material/react-drawer/index.scss';
+@import '@material/react-list/index.scss';
+@import '@material/react-material-icon/index.scss';
+@import '@material/react-card/index.scss';
+@import '@material/react-typography/index.scss';
 
 body {
   background-color: $mdc-theme-background;
+  margin: 0px;
 }
 
+.drawer-container {
+  display: flex;
+  flex-direction: row;
+  height: 100vh;
+  overflow: hidden;
+}
+
+.drawer-app-container {
+  flex: auto;
+  overflow: auto;
+}
+
+.drawer {
+  // top: 0;
+  // position: absolute;
+}
+
+.welcome-card {
+  margin: 7%;
+  justify-content: center;
+
+
+  .welcome-title {
+    text-align: center;
+  }
+
+  main {
+    margin-left: 5%;
+    margin-right: 5%;
+  }
+}

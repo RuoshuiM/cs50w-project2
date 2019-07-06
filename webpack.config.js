@@ -7,7 +7,7 @@ const config = {
     path: path.resolve(__dirname, 'static/dist'),
     filename: 'bundle.js'
   },
-  // devtool: 'source-map',
+  devtool: 'source-map',
   module: {
     rules: [
       {
