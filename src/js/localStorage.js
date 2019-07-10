@@ -23,3 +23,6 @@ export function storageAvailable(type) {
     }
 }
 
+export function saveUsername(username) {
+    
+}

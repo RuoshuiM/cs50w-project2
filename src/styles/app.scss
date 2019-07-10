@@ -6,6 +6,7 @@
 @import '@material/react-material-icon/index.scss';
 @import '@material/react-card/index.scss';
 @import '@material/react-typography/index.scss';
+@import '@material/react-text-field/index.scss';
 
 body {
   background-color: $mdc-theme-background;
@@ -31,15 +32,16 @@ body {
 
 .welcome-card {
   margin: 7%;
-  justify-content: center;
-
-
-  .welcome-title {
-    text-align: center;
-  }
+  text-align: center;
 
   main {
     margin-left: 5%;
     margin-right: 5%;
+  }
+
+  .username-field {
+    display: flex;
+    align-items: center;
+    justify-content: space-evenly;
   }
 }
