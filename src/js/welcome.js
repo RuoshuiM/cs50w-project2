@@ -34,7 +34,7 @@ export function Welcome() {
         let username = e.currentTarget.value;
 
         setIsValid(isUsernameValid(username));
-        setName(e.currentTarget.value);
+        setName(username);
     }
     const handleSubmit = e => {
         e.preventDefault();
@@ -99,11 +99,6 @@ export function Welcome() {
                     >GO!</Button>
                 </form>
             </main>
-
-            <CardActions>
-                <CardActionButtons>
-                </CardActionButtons>
-            </CardActions>
         </Card>
     );
 }
