@@ -3,6 +3,7 @@
 @import '@material/react-button/index.scss';
 @import '@material/react-drawer/index.scss';
 @import '@material/react-list/index.scss';
+@import '@material/react-top-app-bar/index.scss';
 @import '@material/react-material-icon/index.scss';
 @import '@material/react-card/index.scss';
 @import '@material/react-typography/index.scss';
@@ -25,23 +26,29 @@ body {
   overflow: auto;
 }
 
-.drawer {
-  // top: 0;
-  // position: absolute;
-}
+// .drawer {
+//   top: 0;
+//   position: absolute;
+// }
 
 .welcome-card {
   margin: 7%;
+  padding: 5%;
+  padding-top: 0;
   text-align: center;
 
-  main {
-    margin-left: 5%;
-    margin-right: 5%;
-  }
+  // main {
+  //   margin-left: 5%;
+  //   margin-right: 5%;
+  // }
 
   .username-field {
     display: flex;
     align-items: center;
     justify-content: space-evenly;
   }
+}
+
+.channel {
+  text-align: center;
 }

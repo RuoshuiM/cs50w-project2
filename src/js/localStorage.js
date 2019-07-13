@@ -1,4 +1,23 @@
-export function storageAvailable(type) {
+const isAvailable = storageAvailable('localStorage');
+const UsernameStore = {
+    isAvailable,
+
+    store: isAvailable ? window.localStorage : undefined,
+
+    getUsername: function () {
+        if (isAvailable) {
+            return this.store.getItem('username');
+        }
+    },
+
+    setUsername: function (username) {
+        if (isAvailable) {
+            this.store.setItem('username', username);
+        }
+    },
+};
+
+function storageAvailable(type) {
     let storage;
     try {
         storage = window[type];
@@ -7,7 +26,7 @@ export function storageAvailable(type) {
         storage.removeItem(x);
         return true;
     }
-    catch(e) {
+    catch (e) {
         return e instanceof DOMException && (
             // everything except Firefox
             e.code === 22 ||
@@ -23,6 +42,4 @@ export function storageAvailable(type) {
     }
 }
 
-export function saveUsername(username) {
-    
-}
+export default UsernameStore;

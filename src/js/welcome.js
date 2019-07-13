@@ -9,7 +9,7 @@ import Card, {
 
 import {
     Body1,
-    // Body2,
+    Body2,
     // Caption,
     // Headline1,
     // Headline2,
@@ -27,7 +27,9 @@ import MaterialIcon from '@material/react-material-icon';
 
 import Button from '@material/react-button';
 
-export function Welcome() {
+import UsernameStore from './localStorage';
+
+function Welcome(props) {
     const [name, setName] = React.useState('');
     const [isValid, setIsValid] = React.useState(true);
     const handleInputChange = e => {
@@ -45,12 +47,13 @@ export function Welcome() {
         if (!valid) return false;
 
         // logic for storing username
-        console.log("Form submitted!");
+        UsernameStore.setUsername(name);
+        props.setUsername(name);
     }
 
     const renderHelperText = () => {
         if (isValid) {
-            return (<HelperText>Please enter your Username</HelperText>)
+            return (<HelperText>Please enter your username</HelperText>)
         } else {
             return (
                 <HelperText
@@ -58,7 +61,10 @@ export function Welcome() {
                     isValidationMessage
                     validation
                 >
-                    Must not contain space
+                    {name.length === 0? 
+                    'Username can\'t be empty' :
+                        'Must not contain space'
+                    }
                 </HelperText>
             );
         }
@@ -73,6 +79,8 @@ export function Welcome() {
                 <Body1>
                     To get started, enter your username below and click "GO!"
                 </Body1>
+
+                <StorageStatus />
 
                 <form className='username-field' onSubmit={handleSubmit}>
                     <div>
@@ -103,7 +111,26 @@ export function Welcome() {
     );
 }
 
+function StorageStatus() {
+    if (UsernameStore.isAvailable) {
+        return (
+            <Body2>
+                Your browser supports localStorage, so your username will be stored across browser sessions.
+            </Body2>
+        );
+    } else {
+        return (
+            <Body2>
+                Your browser doesn't seem to support localStorage, so your username will not be stored across browser sessions.
+            </Body2>
+        );
+    }
+}
+
+
 function isUsernameValid(username) {
     // username should not include space
     return !(username.length === 0 || (username.includes(' ')));
 }
+
+export default Welcome;

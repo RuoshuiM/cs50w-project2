@@ -2,6 +2,9 @@
 
 Web Programming with Python and JavaScript
 
+## TODOs:
+- Add local storage support
+
 ## Requirements 
 Alright, it’s time to actually build your web application! Here are the requirements:
 
