@@ -1,7 +1,7 @@
 import React from 'react';
 import TopAppBar, { TopAppBarFixedAdjust, TopAppBarRow, TopAppBarSection, TopAppBarIcon, TopAppBarTitle } from '@material/react-top-app-bar';
 import Drawer, { DrawerAppContent, DrawerContent, DrawerHeader, DrawerTitle } from '@material/react-drawer';
-import List, { ListItem, ListItemGraphic, ListItemText } from '@material/react-list';
+import List, { ListItem, ListItemGraphic, ListItemText, ListGroup, ListGroupSubheader, ListDivider } from '@material/react-list';
 import MaterialIcon from '@material/react-material-icon';
 import {
   Body1,
@@ -23,35 +23,45 @@ import { Scrollbars } from 'react-custom-scrollbars';
 function Chat(props) {
   const [open, setOpen] = React.useState(true);
   const [selectedChannelIndex, setSelectedChannelIndex] = React.useState(0);
-  const [channel, setChannel] = React.useState('default');
-  const channels = generateChannels(50);
+  const channels = generateChannels(0);
+
+  let channelList;
+
+  if (channels.length === 0) {
+    channelList = <Body2 className='no-channel-text'>No channels to display</Body2>;
+  } else {
+    channelList = (
+      <Scrollbars autoHide autoHideTimeout={900} autoHideDuration={200}>
+        <List singleSelection selectedIndex={selectedChannelIndex} handleSelect={index => setSelectedChannelIndex(index)}>
+          {
+            channels.map((channel, i) => {
+              return (
+                <ListItem key={channel.id}>
+                  <ListItemGraphic graphic={<MaterialIcon icon={selectedChannelIndex === i ? 'chat' : 'chat_bubble_outline'} />} />
+                  <ListItemText primaryText={channel.name} />
+                </ListItem>
+              )
+            })
+          }
+        </List>
+      </Scrollbars>);
+  }
+
   return (
     <div className='drawer-container'>
       <Drawer
-        // dismissible
-        // open={open}
+        dismissible
+        open={open}
         className='drawer'
       >
 
         <DrawerHeader>
           <DrawerTitle tag={Headline5}>{props.username}</DrawerTitle>
+          <Overline>My Channels</Overline>
         </DrawerHeader>
 
         <DrawerContent>
-          <Scrollbars autoHide autoHideTimeout={1000} autoHideDuration={200}>
-            <List singleSelection selectedIndex={selectedChannelIndex} handleSelect={index => setSelectedChannelIndex(index)}>
-              {
-                channels.map((channel, i) => {
-                  return (
-                    <ListItem key={channel.id}>
-                      <ListItemGraphic graphic={<MaterialIcon icon={selectedChannelIndex === i ? 'chat' : 'chat_bubble_outline'} />} />
-                      <ListItemText primaryText={channel.name} />
-                    </ListItem>
-                  )
-                })
-              }
-            </List>
-          </Scrollbars>
+          {channelList}
         </DrawerContent>
       </Drawer>
       <DrawerAppContent className='drawer-app-content'>
@@ -59,19 +69,15 @@ function Chat(props) {
           <TopAppBarRow>
             <TopAppBarSection align='start'>
               <TopAppBarIcon navIcon tabIndex={0}>
-                <MaterialIcon hasRipple icon='menu' onClick={() => console.log('click')} />
+                <MaterialIcon hasRipple icon={open ? 'keyboard_arrow_left' : 'menu'} onClick={() => setOpen(!open)} />
               </TopAppBarIcon>
-              <TopAppBarTitle>{channels[selectedChannelIndex].name}</TopAppBarTitle>
+              <TopAppBarTitle>{channels.length ? channels[selectedChannelIndex].name : "No available channels"}</TopAppBarTitle>
             </TopAppBarSection>
           </TopAppBarRow>
         </TopAppBar>
         <TopAppBarFixedAdjust>
           My exciting content!
-      </TopAppBarFixedAdjust>
-
-        <TopAppBarFixedAdjust>
-          Your inbox content
-          </TopAppBarFixedAdjust>
+        </TopAppBarFixedAdjust>
       </DrawerAppContent>
     </div>
   );
