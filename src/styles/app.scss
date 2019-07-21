@@ -8,6 +8,9 @@
 @import '@material/react-card/index.scss';
 @import '@material/react-typography/index.scss';
 @import '@material/react-text-field/index.scss';
+@import '@material/react-fab/index.scss';
+
+@import '~draft-js/dist/Draft.css';
 
 body {
   background-color: $mdc-theme-background;
@@ -19,9 +22,19 @@ body {
   flex-direction: row;
   height: 100vh;
   overflow: hidden;
+
+  .channel-title-container {
+    margin-top: 1rem;
+    display: flex;
+    justify-content: space-around;
+    align-items: flex-end;
+  }
+  // .channel-container-text {
+  //   margin-left: 1.67em;
+  // }
 }
 
-.drawer-app-container {
+.drawer-app-content {
   flex: auto;
   overflow: auto;
 }
@@ -49,6 +62,21 @@ body {
   }
 }
 
-.no-channel-text {
-  margin-left: 1.67em;
+.chat-app {
+  display: flex;
+  flex-flow: column nowrap;
+}
+
+div.DraftEditor-root {
+  background-color: #fffef7;
+  // width: 100%;
+  display: block;
+  // margin: auto;
+  box-shadow: 0px 0px 6px 1px $mdc-theme-secondary;
+  // height:300px;
+  // padding: 20px;
+  // font-size: 18px;
+
+  // overflow-y: scroll;
+  font-family: $mdc-typography-font-family;
 }

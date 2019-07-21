@@ -1,7 +1,7 @@
 import React from 'react';
 import TopAppBar, { TopAppBarFixedAdjust, TopAppBarRow, TopAppBarSection, TopAppBarIcon, TopAppBarTitle } from '@material/react-top-app-bar';
 import Drawer, { DrawerAppContent, DrawerContent, DrawerHeader, DrawerTitle } from '@material/react-drawer';
-import List, { ListItem, ListItemGraphic, ListItemText, ListGroup, ListGroupSubheader, ListDivider } from '@material/react-list';
+import List, { ListItem, ListItemGraphic, ListItemText, ListDivider } from '@material/react-list';
 import MaterialIcon from '@material/react-material-icon';
 import {
   Body1,
@@ -17,34 +17,35 @@ import {
   Subtitle1,
   Subtitle2,
 } from '@material/react-typography';
+import Fab from '@material/react-fab';
 
 import { Scrollbars } from 'react-custom-scrollbars';
+
+import ChatInput from './editor';
 
 function Chat(props) {
   const [open, setOpen] = React.useState(true);
   const [selectedChannelIndex, setSelectedChannelIndex] = React.useState(0);
-  const channels = generateChannels(0);
+  const channels = generateChannels(30);
 
   let channelList;
 
   if (channels.length === 0) {
-    channelList = <Body2 className='no-channel-text'>No channels to display</Body2>;
+    channelList = <Body2 className='channel-container-text'>No channels to display</Body2>;
   } else {
     channelList = (
-      <Scrollbars autoHide autoHideTimeout={900} autoHideDuration={200}>
-        <List singleSelection selectedIndex={selectedChannelIndex} handleSelect={index => setSelectedChannelIndex(index)}>
-          {
-            channels.map((channel, i) => {
-              return (
-                <ListItem key={channel.id}>
-                  <ListItemGraphic graphic={<MaterialIcon icon={selectedChannelIndex === i ? 'chat' : 'chat_bubble_outline'} />} />
-                  <ListItemText primaryText={channel.name} />
-                </ListItem>
-              )
-            })
-          }
-        </List>
-      </Scrollbars>);
+      <List singleSelection selectedIndex={selectedChannelIndex} handleSelect={index => setSelectedChannelIndex(index)}>
+        {
+          channels.map((channel, i) => {
+            return (
+              <ListItem key={channel.id}>
+                <ListItemGraphic graphic={<MaterialIcon icon={selectedChannelIndex === i ? 'chat' : 'chat_bubble_outline'} />} />
+                <ListItemText primaryText={channel.name} />
+              </ListItem>
+            )
+          })
+        }
+      </List>);
   }
 
   return (
@@ -57,11 +58,17 @@ function Chat(props) {
 
         <DrawerHeader>
           <DrawerTitle tag={Headline5}>{props.username}</DrawerTitle>
-          <Overline>My Channels</Overline>
         </DrawerHeader>
 
         <DrawerContent>
-          {channelList}
+          <Scrollbars autoHide autoHideTimeout={500} autoHideDuration={200}>
+            <div className='channel-title-container'>
+              <Overline className='channel-container-text'>Channels</Overline>
+              <Fab mini icon={<MaterialIcon icon="add" />}/>
+            </div>
+            {channelList}
+
+          </Scrollbars>
         </DrawerContent>
       </Drawer>
       <DrawerAppContent className='drawer-app-content'>
@@ -75,14 +82,18 @@ function Chat(props) {
             </TopAppBarSection>
           </TopAppBarRow>
         </TopAppBar>
-        <TopAppBarFixedAdjust>
-          My exciting content!
+        <TopAppBarFixedAdjust className='chat-app'>
+          <ChatMessages />
+          <ChatInput />
         </TopAppBarFixedAdjust>
       </DrawerAppContent>
     </div>
   );
 }
 
+function ChatMessages(props) {
+  return (<div className='chat-messages'></div>);
+}
 
 function SideBar(props) {
 
