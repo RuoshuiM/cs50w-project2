@@ -1,7 +1,7 @@
 import React from 'react';
 import TopAppBar, { TopAppBarFixedAdjust, TopAppBarRow, TopAppBarSection, TopAppBarIcon, TopAppBarTitle } from '@material/react-top-app-bar';
 import Drawer, { DrawerAppContent, DrawerContent, DrawerHeader, DrawerTitle } from '@material/react-drawer';
-import List, { ListItem, ListItemGraphic, ListItemText, ListDivider } from '@material/react-list';
+import List, { ListItem, ListItemGraphic, ListItemText } from '@material/react-list';
 import MaterialIcon from '@material/react-material-icon';
 import {
   Body1,
@@ -21,11 +21,17 @@ import Fab from '@material/react-fab';
 
 import { Scrollbars } from 'react-custom-scrollbars';
 
+import { useMediaQuery } from './hooks';
+
 import ChatInput from './editor';
 
 function Chat(props) {
-  const [open, setOpen] = React.useState(true);
+  let isSmallScreen = useMediaQuery("(max-width: 900px)");
+
+  // this is only used for modal drawer on small screen size
+  const [open, setOpen] = React.useState(false);
   const [selectedChannelIndex, setSelectedChannelIndex] = React.useState(0);
+  
   const channels = generateChannels(30);
 
   let channelList;
@@ -48,37 +54,66 @@ function Chat(props) {
       </List>);
   }
 
-  return (
-    <div className='drawer-container'>
+  let appDrawerContent = (
+    <>
+      <DrawerHeader>
+        <DrawerTitle tag={Headline5}>{props.username}</DrawerTitle>
+      </DrawerHeader>
+
+      <DrawerContent>
+        <Scrollbars autoHide autoHideTimeout={500} autoHideDuration={200}>
+          <div className='channel-title-container'>
+            <Overline className='channel-container-text'>Channels</Overline>
+            <Fab mini icon={<MaterialIcon icon="add" />} />
+          </div>
+          {channelList}
+
+        </Scrollbars>
+      </DrawerContent>
+    </>
+  );
+
+  let drawer;
+  if (isSmallScreen) {
+    drawer = (
       <Drawer
-        dismissible
+        modal
         open={open}
         className='drawer'
+        onClose={() => setOpen(false)}
       >
-
-        <DrawerHeader>
-          <DrawerTitle tag={Headline5}>{props.username}</DrawerTitle>
-        </DrawerHeader>
-
-        <DrawerContent>
-          <Scrollbars autoHide autoHideTimeout={500} autoHideDuration={200}>
-            <div className='channel-title-container'>
-              <Overline className='channel-container-text'>Channels</Overline>
-              <Fab mini icon={<MaterialIcon icon="add" />}/>
-            </div>
-            {channelList}
-
-          </Scrollbars>
-        </DrawerContent>
+        {appDrawerContent}
       </Drawer>
+    );
+  } else {
+    drawer = (
+      <Drawer
+        open={true}
+      >
+        {appDrawerContent}
+      </Drawer>
+    );
+  }
+
+
+  return (
+    <div className='drawer-container'>
+
+      {drawer}
+
       <DrawerAppContent className='drawer-app-content'>
         <TopAppBar>
           <TopAppBarRow>
             <TopAppBarSection align='start'>
-              <TopAppBarIcon navIcon tabIndex={0}>
-                <MaterialIcon hasRipple icon={open ? 'keyboard_arrow_left' : 'menu'} onClick={() => setOpen(!open)} />
-              </TopAppBarIcon>
-              <TopAppBarTitle>{channels.length ? channels[selectedChannelIndex].name : "No available channels"}</TopAppBarTitle>
+              {
+                isSmallScreen &&
+                <TopAppBarIcon navIcon tabIndex={0}>
+                  <MaterialIcon hasRipple icon='menu' onClick={() => setOpen(true)} />
+                </TopAppBarIcon>
+              }
+              <TopAppBarTitle>{channels.length ?
+                channels[selectedChannelIndex].name : "No available channels"}
+              </TopAppBarTitle>
             </TopAppBarSection>
           </TopAppBarRow>
         </TopAppBar>
@@ -93,14 +128,6 @@ function Chat(props) {
 
 function ChatMessages(props) {
   return (<div className='chat-messages'></div>);
-}
-
-function SideBar(props) {
-
-}
-
-function ChatView(props) {
-
 }
 
 function generateChannels(num) {
