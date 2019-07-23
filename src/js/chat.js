@@ -1,7 +1,7 @@
 import React from 'react';
 import TopAppBar, { TopAppBarFixedAdjust, TopAppBarRow, TopAppBarSection, TopAppBarIcon, TopAppBarTitle } from '@material/react-top-app-bar';
 import Drawer, { DrawerAppContent, DrawerContent, DrawerHeader, DrawerTitle } from '@material/react-drawer';
-import List, { ListItem, ListItemGraphic, ListItemText } from '@material/react-list';
+import List, { ListItem, ListItemGraphic, ListItemText, ListDivider } from '@material/react-list';
 import MaterialIcon from '@material/react-material-icon';
 import {
   Body1,
@@ -31,42 +31,36 @@ function Chat(props) {
   // this is only used for modal drawer on small screen size
   const [open, setOpen] = React.useState(false);
   const [selectedChannelIndex, setSelectedChannelIndex] = React.useState(0);
-  
+
   const channels = generateChannels(30);
-
-  let channelList;
-
-  if (channels.length === 0) {
-    channelList = <Body2 className='channel-container-text'>No channels to display</Body2>;
-  } else {
-    channelList = (
-      <List singleSelection selectedIndex={selectedChannelIndex} handleSelect={index => setSelectedChannelIndex(index)}>
-        {
-          channels.map((channel, i) => {
-            return (
-              <ListItem key={channel.id}>
-                <ListItemGraphic graphic={<MaterialIcon icon={selectedChannelIndex === i ? 'chat' : 'chat_bubble_outline'} />} />
-                <ListItemText primaryText={channel.name} />
-              </ListItem>
-            )
-          })
-        }
-      </List>);
-  }
 
   let appDrawerContent = (
     <>
       <DrawerHeader>
         <DrawerTitle tag={Headline5}>{props.username}</DrawerTitle>
       </DrawerHeader>
-
       <DrawerContent>
+        <Fab className='add-channel_fab' icon={<MaterialIcon icon="add" />} />
         <Scrollbars autoHide autoHideTimeout={500} autoHideDuration={200}>
-          <div className='channel-title-container'>
-            <Overline className='channel-container-text'>Channels</Overline>
-            <Fab mini icon={<MaterialIcon icon="add" />} />
-          </div>
-          {channelList}
+          <Overline className='channel-container-text'>Channels</Overline>
+          <ListDivider tag='div' />
+          {
+            channels.length === 0 ?
+              <Body2 className='channel-container-text'>No channels to display</Body2>
+              :
+              <List singleSelection selectedIndex={selectedChannelIndex} handleSelect={index => setSelectedChannelIndex(index)}>
+                {
+                  channels.map((channel, i) => {
+                    return (
+                      <ListItem key={channel.id}>
+                        <ListItemGraphic graphic={<MaterialIcon icon={selectedChannelIndex === i ? 'chat' : 'chat_bubble_outline'} />} />
+                        <ListItemText primaryText={channel.name} />
+                      </ListItem>
+                    )
+                  })
+                }
+              </List>
+          }
 
         </Scrollbars>
       </DrawerContent>

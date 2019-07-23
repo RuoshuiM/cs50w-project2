@@ -23,15 +23,21 @@ body {
   height: 100vh;
   overflow: hidden;
 
-  .channel-title-container {
-    margin-top: 1rem;
-    display: flex;
-    justify-content: space-around;
-    align-items: flex-end;
-  }
-  // .channel-container-text {
-  //   margin-left: 1.67em;
+  // .channel-title-container {
+  //   margin-top: 1rem;
+  //   display: flex;
+  //   justify-content: space-evenly;
+  //   align-items: flex-end;
   // }
+  .channel-container-text {
+    margin-left: 2rem;
+  }
+  .add-channel_fab {
+    position: absolute;
+    left: 11rem;
+    bottom: 2rem;
+    z-index: 1;
+  }
 }
 
 .drawer-app-content {
